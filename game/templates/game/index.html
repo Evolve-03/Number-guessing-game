@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Number Guessing Game</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin-top: 50px;
+            background-color: bisque;
+        }
+        input[type="number"], select {
+            padding: 10px;
+            font-size: 16px;
+        }
+        input[type="submit"] {
+            padding: 10px 20px;
+            font-size: 16px;
+            margin-top: 10px;
+            color: black;
+        }
+        input[type="submit"]:hover {
+            background-color: blueviolet;
+            color: white;
+        }
+        .message-box {
+            border: 2px solid blueviolet;
+            padding: 2px;
+            margin: 25px auto;
+            width: 25%;
+            background-color: white;
+            color: blueviolet;
+            font-size: 18px;
+        }
+        .user-input-box {
+            border: 2px solid blueviolet;
+            padding: 20px;
+            margin: 25px auto;
+            width: 35%;
+            background-color: paleturquoise;
+            color: black;
+            font-size: 18px;
+        }
+    </style>
+</head>
+<body>
+    <h1><u>Number Guessing Game</u></h1>
+    <p>Welcome to the Number Guessing Game! Try to guess the number I'm thinking of between <b>1</b> and <b>100</b>.</p>
+    {% if message %}
+        <div class="message-box">
+            <p><b>{{ message }}</b></p>
+        </div>
+    {% endif %}
+    <div class="user-input-box">
+    <form action="{% url 'submit_guess' %}" method="post">
+        {% csrf_token %}
+        <label for="difficulty">Select difficulty level:</label>
+        <select id="difficulty" name="difficulty" required>
+            <option value="easy" {% if difficulty == 'easy' %}selected{% endif %}>Easy</option>
+            <option value="medium" {% if difficulty == 'medium' %}selected{% endif %}>Medium</option>
+            <option value="hard" {% if difficulty == 'hard' %}selected{% endif %}>Hard</option>
+        </select>
+        <br><br>
+        <label for="guess">Enter your guess:</label>
+        <input type="number" id="guess" name="guess" min="1" max="10" required>
+        <input type="submit" value="Submit Guess">
+    </form>
+</div>
+</body>
+</html>
